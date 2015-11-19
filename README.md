@@ -113,7 +113,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
 
 ##安装步骤##
 - 编译安装python2.7+，setuptools和pip
-- apt-get install freetype*
+- apt-get install libfreetype*
 - apt-get install libpng*
 - apt-get install sysstat
 - apt-get install mysql libmysqld-dev
