@@ -122,28 +122,27 @@ performance monitor用于监控linux服务器中的资源情况，包括：
 
 
 ##使用方法##
-> 配置config目录下的config.ini和report.ini
-> cd performance_monitor/bin 
-> ./monitor_start.sh -i interval -c count [-t time] -f prefix_name
-> 参数说明:                                                         
->   -i    采样间隔                                           
->   -c    采样次数                                           
->   -t    采样时长                  
->         (如果你使用了-t设置时长 ,脚本将会忽略-c采样次数)     
->   -f    数据文件名前缀             
->         例子: test-v1.0-api (使用'-'作为分隔符，请勿使用'_' ) 
-> 结束后可到result目录中查看对应的输出表单和数据
+   配置config目录下的config.ini和report.ini
+   
+   cd performance_monitor/bin 
+   
+   ./monitor_start.sh -i interval -c count [-t time] -f prefix_name
+   
+   参数说明:                                                         
+      -i    采样间隔                                           
+      -c    采样次数                                           
+      -t    采样时长(如果你使用了-t设置时长 ,脚本将会忽略-c采样次数)     
+      -f    数据文件名前缀 例子: test-v1.0-api (使用'-'作为分隔符，请勿使用'_' ) 
+    结束后可到result目录中查看对应的输出表单和数据
 
 
 ##样例##
+
 <html>
-</style>
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-</head>
-</body>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+<body>
 <div align="center">
-    <p><strong>服务器系统信息</strong></p>
+<p><strong>服务器系统信息</strong></p>
     <table border="0" cellpadding="5" cellspacing="2"  width="50%">
         <tr>
             <th>监控时间段</th>
@@ -166,8 +165,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
             <td>4048224 kB</td>
         </tr>
         </table>
-        <p></p>
-
+    <p></p>
     <p><strong>服务器资源使用情况汇总 (test-v1.0-api) </strong></p>
     <table border="0" cellpadding="5" cellspacing="2"  width="60%">
     <tr>
@@ -178,7 +176,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <th>Avg</th>
         <th>90%小于</th>
     </tr>
-
     <tr>
         <th rowspan="4">server_cpu</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_cpu_201511192006-iowait.png" target="_png">iowait(%)</a></td>
@@ -187,7 +184,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.07</td>
         <td>0.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_cpu_201511192006-system.png" target="_png">system(%)</a></td>
         <td>12.5</td>
@@ -195,7 +191,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>16.42</td>
         <td>18.09</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_cpu_201511192006-used.png" target="_png">used(%)</a></td>
         <td>13.43</td>
@@ -203,7 +198,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>17.34</td>
         <td>19.31</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_cpu_201511192006-user.png" target="_png">user(%)</a></td>
         <td>0.0</td>
@@ -211,7 +205,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.85</td>
         <td>1.98</td>
     </tr>
-
     <tr>
         <th rowspan="2">server_eth0</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_eth0_201511192006-rx(MB).png" target="_png">rx/s(MB)</a></td>
@@ -220,7 +213,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.0</td>
         <td>0.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_eth0_201511192006-tx(MB).png" target="_png">tx/s(MB)</a></td>
         <td>0.0</td>
@@ -228,7 +220,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.0</td>
         <td>0.01</td>
     </tr>
-
     <tr>
         <th rowspan="3">server_io_rate</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_io_rate_201511192006-read(MB).png" target="_png">read/s(MB)</a></td>
@@ -237,7 +228,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.0</td>
         <td>0.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_io_rate_201511192006-tps.png" target="_png">tps</a></td>
         <td>0.0</td>
@@ -245,7 +235,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>4.24</td>
         <td>15.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_io_rate_201511192006-wrtn(MB).png" target="_png">wrtn/s(MB)</a></td>
         <td>0.0</td>
@@ -253,7 +242,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.02</td>
         <td>0.09</td>
     </tr>
-
     <tr>
         <th rowspan="6">server_memory</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-memused.png" target="_png">memused(%)</a></td>
@@ -262,7 +250,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>97.67</td>
         <td>97.68</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-memused--.png" target="_png">memused--(%)</a></td>
         <td>82.48</td>
@@ -270,7 +257,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>82.49</td>
         <td>82.5</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-buffers(MB).png" target="_png">buffers(MB)</a></td>
         <td>35.62</td>
@@ -278,7 +264,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>35.72</td>
         <td>35.81</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-cached(MB).png" target="_png">cached(MB)</a></td>
         <td>564.32</td>
@@ -286,7 +271,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>564.37</td>
         <td>564.41</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-memfree(MB).png" target="_png">memfree(MB)</a></td>
         <td>91.51</td>
@@ -294,7 +278,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>91.94</td>
         <td>92.18</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_memory_201511192006-memused(MB).png" target="_png">memused(MB)</a></td>
         <td>3860.86</td>
@@ -302,7 +285,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>3861.4</td>
         <td>3861.74</td>
     </tr>
-
     <tr>
         <th rowspan="4">server_queue_load</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_queue_load_201511192006-ldavg-1.png" target="_png">ldavg-1</a></td>
@@ -311,7 +293,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.08</td>
         <td>0.15</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_queue_load_201511192006-ldavg-15.png" target="_png">ldavg-15</a></td>
         <td>0.01</td>
@@ -319,7 +300,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.01</td>
         <td>0.02</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_queue_load_201511192006-ldavg-5.png" target="_png">ldavg-5</a></td>
         <td>0.03</td>
@@ -327,7 +307,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>0.05</td>
         <td>0.05</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_queue_load_201511192006-plist-sz.png" target="_png">plist-sz</a></td>
         <td>623.0</td>
@@ -335,7 +314,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>632.92</td>
         <td>633.0</td>
     </tr>
-
     <tr>
         <th rowspan="3">server_socket</th>
         <td><a href="sample/test-v1.0-api_performanceTest_server_socket_201511192006-tcpsck.png" target="_png">tcpsck</a></td>
@@ -344,7 +322,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>38.0</td>
         <td>38.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_socket_201511192006-totsck.png" target="_png">totsck</a></td>
         <td>573.0</td>
@@ -352,7 +329,6 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>578.95</td>
         <td>579.0</td>
     </tr>
-
     <tr>
         <td><a href="sample/test-v1.0-api_performanceTest_server_socket_201511192006-udpsck.png" target="_png">udpsck</a></td>
         <td>6.0</td>
@@ -360,7 +336,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         <td>6.0</td>
         <td>6.0</td>
     </tr>
-
     </table>
+</div>
 </body>
 </html>
