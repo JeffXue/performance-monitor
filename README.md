@@ -143,7 +143,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
 <body>
 <div align="center">
 <p><strong>服务器系统信息</strong></p>
-    <table border="0" cellpadding="5" cellspacing="2"  width="50%">
+    <table border="0" cellpadding="5" cellspacing="2"  width="50%" align="center">
         <tr>
             <th>监控时间段</th>
             <td>2015-11-19_20:06~2015-11-19_20:08</td>
@@ -167,7 +167,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
         </table>
     <p></p>
     <p><strong>服务器资源使用情况汇总 (test-v1.0-api) </strong></p>
-    <table border="0" cellpadding="5" cellspacing="2"  width="60%">
+    <table border="0" cellpadding="5" cellspacing="2"  width="60%" align="center">
     <tr>
         <th>Item</th>
         <th>Type</th>
