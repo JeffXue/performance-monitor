@@ -1,0 +1,6 @@
+*.pyc
+*.out
+result/*
+venv/*
+log/*
+backup/*
