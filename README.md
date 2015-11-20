@@ -95,7 +95,7 @@ performance monitor用于监控linux服务器中的资源情况，包括：
     * `total_memory             --  总的使用内存`
     * `%ps_eden_space           --  年轻代（Eden Space）使用百分比`
     * `%ps_old_gen              --  年老代使用百分比`
-    * `%ps_survivor_space       --  年轻代(Suvivor Space)使用百分比`
+    * `%ps_survivor_space       --  年轻代(Survivor Space)使用百分比`
     * `max_threads              --  最大线程数量`
     * `current_thread_count     --  近期线程数量`
     * `current_thread_busy      --  近期忙线程数量`
@@ -112,11 +112,14 @@ performance monitor用于监控linux服务器中的资源情况，包括：
 
 
 ##安装步骤##
+- apt-get install build-essential
+- apt-get install libssl-dev
 - 编译安装python2.7+，setuptools和pip
-- apt-get install freetype*
+- apt-get install libfreetype*
 - apt-get install libpng*
 - apt-get install sysstat
-- apt-get install mysql libmysqld-dev
+- apt-get install libmysqld-dev
+- apt-get install zip
 - pip2.7 install virtualenv (可选，若需要在python虚拟环境中运行，则需安装）
 - pip2.7 install -r requirements.txt
 
