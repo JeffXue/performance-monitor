@@ -17,7 +17,7 @@ td{
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
-</body>
+<body>
 <div align="center">
     <p><strong>服务器系统信息</strong></p>
     <table border="0" cellpadding="5" cellspacing="2"  width="50%%">
