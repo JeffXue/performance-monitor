@@ -25,9 +25,21 @@ class Report():
     result_dir = ""
     report_file = ""
     package_file = ""
+    ftp_ip = ""
+    ftp_user = ""
+    ftp_password = ""
 
     def __init__(self, result_dir):
         self.result_dir = copy.copy(result_dir)
+
+    def get_conf(self):
+        config = ConfigParser.ConfigParser()
+        with open("../conf/report.ini", "r") as cfg_file:
+            config.readfp(cfg_file)
+        self.ftp_ip = config.get("ftp", "ip")
+        self.ftp_user = config.get("ftp", "user")
+        self.ftp_password = config.get("ftp", "password")
+
 
     def get_system_information(self):
         """
@@ -157,9 +169,53 @@ class Report():
             else:
                 self.package_file = self.result_dir + "/" + self.package_file
 
+    def ftp_upload(self):
+        ftp = FTP()
+        ftp.set_debuglevel(0)
+        ftp.connect(self.ftp_ip, '21')
+        ftp.login(self.ftp_user, self.ftp_password)
+        try:
+            ftp.mkd(self.datafile_prefix.split("-")[0])
+        except Exception, e:
+            print ("[INFO]ftp directory: %s existed" %
+                    self.datafile_prefix.split("-")[0])
+            print e
+        ftp.cwd(self.datafile_prefix.split("-")[0])
+        try:
+            ftp.mkd(self.datafile_prefix.split("-")[2])
+        except Exception, e:
+            print ("[INFO]ftp directory: %s existed" %
+                    self.datafile_prefix.split("-")[2])
+            print e
+        ftp.cwd(self.datafile_prefix.split("-")[2])
+        try:
+            ftp.mkd(self.datafile_prefix.split("-")[1])
+        except Exception, e:
+            print ("[INFO]ftp directory: %s existed" %
+                    self.datafile_prefix.split("-")[1])
+            print e
+        ftp.cwd(self.datafile_prefix.split("-")[1])
+        try:
+            ftp.mkd("monitor")
+        except Exception, e:
+            print "[INFO]ftp directory: monitor existed"
+            print e
+        ftp.cwd("monitor")
+        ftp.mkd(os.path.basename(self.report_file).split(".html")[0])
+        ftp.cwd(os.path.basename(self.report_file).split(".html")[0])
+        buffer_size = 1024
+        for datafile in util.get_dir_files(self.result_dir):
+            file_handler = open(self.result_dir + "/" + datafile, "rb")
+            ftp.storbinary("STOR %s" % datafile, file_handler, buffer_size)
+        ftp.set_debuglevel(0)
+        file_handler.close()
+        ftp.quit()
+
     def work(self):
+        self.get_conf()
         self.get_system_information()
         self.set_file_name()
         self.generate_html_report()
         self.package_files()
+        self.ftp_upload()
 
