@@ -28,6 +28,7 @@ class Report():
     ftp_ip = ""
     ftp_user = ""
     ftp_password = ""
+    ftp_flag = 0
 
     def __init__(self, result_dir):
         self.result_dir = copy.copy(result_dir)
@@ -36,6 +37,7 @@ class Report():
         config = ConfigParser.ConfigParser()
         with open("../conf/report.ini", "r") as cfg_file:
             config.readfp(cfg_file)
+        self.ftp_flag = int(config.get("ftp", "flag"))
         self.ftp_ip = config.get("ftp", "ip")
         self.ftp_user = config.get("ftp", "user")
         self.ftp_password = config.get("ftp", "password")
@@ -217,5 +219,6 @@ class Report():
         self.set_file_name()
         self.generate_html_report()
         self.package_files()
-        self.ftp_upload()
+        if self.ftp_flag:
+            self.ftp_upload()
 
