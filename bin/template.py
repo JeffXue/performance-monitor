@@ -80,6 +80,7 @@ report_resource_html_data_single = """
 
 report_html_end = """
     </table>
+</div>
 </body>
 </html>
 """
