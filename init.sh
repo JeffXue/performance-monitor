@@ -9,7 +9,7 @@ cd Python-2.7.10
 ./configure
 make && make install
 cd ..
-rm -rf Python-2.7.10
+rm -rf Python-2.7.10 Python-2.7.10.tgz
 tar xvzf lib/setuptools-18.5.tar.gz 
 cd setuptools-18.5
 python setup.py install
