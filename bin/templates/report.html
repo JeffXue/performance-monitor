@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+{% block content %}
+<body>
+<div align="center">
+  <p><strong>服务器系统信息</strong></p>
+  <table class="bordered">
+    <tr>
+      <th>监控时间段</th>
+      <td>{{ duration }}</td>
+    </tr>
+    <tr>
+      <th>主机名</th>
+      <td>{{ system_information['hostname'] }}</td>
+    </tr>
+    <tr>
+      <th>内核版本</th>
+      <td>{{ system_information['kernel'] }}</td>
+    </tr>
+    <tr>
+      <th>CPU</th>
+      <td>{{ system_information['cpuinfo'] }}</td>
+    </tr>
+    <tr>
+      <th>内存</th>
+      <td>{{ system_information['meminfo'] }}</td>
+    </tr>
+  </table>
+  <p></p>
+
+  <p><strong>服务器资源使用情况汇总 ({{ datafile_prefix }}) </strong></p>
+  <table class="bordered">
+  <tr>
+    <th>Item</th>
+    <th>Type</th>
+    <th>Min</th>
+    <th>Max</th>
+    <th>Avg</th>
+    <th>90%小于</th>
+  </tr>
+  {% for item, sub_type_dict in data_sum.iteritems() %}
+    {% for sub_type, sum_value in sub_type_dict.iteritems() %}
+    {% if loop.first %}
+  <tr>
+    <th rowspan={{ sum_value[-1]  }}>{{ item }}</th>
+    <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
+    <td>{{ sum_value[0] }}</td>
+    <td>{{ sum_value[1] }}</td>
+    <td>{{ sum_value[2] }}</td>
+    <td>{{ sum_value[3] }}</td>
+  </tr>
+    {% else %}
+  <tr>
+    <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
+    <td>{{ sum_value[0] }}</td>
+    <td>{{ sum_value[1] }}</td>
+    <td>{{ sum_value[2] }}</td>
+    <td>{{ sum_value[3] }}</td>
+  </tr>
+    {% endif %}
+    {% endfor %}
+  {% endfor %}
+</div>
+</body>
+{% endblock%}
