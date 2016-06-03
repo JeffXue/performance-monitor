@@ -198,6 +198,59 @@ function monitorNetstat(){
 	done
 }
 
+#监控socket不同状态数量函数
+function monitorSocketStat(){
+    echo `date +%H:%M:%S` `date +%P` LISTEN SYN-RECV ESTAB CLOSE-WAIT LAST_ACK FIN-WAIT-1 FIN-WAIT-2 CLOSING TIME_WAIT > $resDir/$filename"_SocketStat_"$time.txt
+	nowTime=`date +%s`
+	while [ $nowTime -lt $endTime ]
+    do
+	    ss -t -a |awk '{print $1}' |sort | uniq -c |sed 's/^[ \t]*//g' > socket_stat.txt
+        listenNum=`grep LISTEN socket_stat.txt| awk '{print $1}'`
+        synRecvNum=`grep SYN-RECV socket_stat.txt| awk '{print $1}'`
+        estabNum=`grep ESTAB socket_stat.txt| awk '{print $1}'`
+        closeWaitNum=`grep CLOSE-WAIT socket_stat.txt| awk '{print $1}'`
+        lastAckNum=`grep LAST_ACK socket_stat.txt| awk '{print $1}'`
+        finWait1Num=`grep FIN-WAIT-1 socket_stat.txt| awk '{print $1}'`
+        finWait2Num=`grep FIN-WAIT-2 socket_stat.txt| awk '{print $1}'`
+        closingNum=`grep CLOSING socket_stat.txt| awk '{print $1}'`
+        timeWaitNum=`grep TIME_WAIT socket_stat.txt| awk '{print $1}'`
+
+        if [ -z $listenNum ];then
+            listenNum=0
+        fi
+        if [ -z $synRecvNum ];then
+            synRecvNum=0
+        fi
+        if [ -z $estabNum ];then
+            estabNum=0
+        fi
+        if [ -z $closeWaitNum ];then
+            closeWaitNum=0
+        fi
+        if [ -z $lastAckNum ];then
+            lastAckNum=0
+        fi
+        if [ -z $finWait1Num ];then
+            finWait1Num=0
+        fi
+        if [ -z $finWait2Num ];then
+            finWait2Num=0
+        fi
+        if [ -z $closingNum ];then
+            closingNum=0
+        fi
+        if [ -z $timeWaitNum ];then
+            timeWaitNum=0
+        fi
+
+		echo `date +%H:%M:%S` `date +%P` $listenNum $synRecvNum $estabNum $closeWaitNum $lastAckNum $finWait1Num $finWait2Num $closingNum $timeWaitNum >> $resDir/$filename"_SocketStat_"$time.txt
+		sleep $interval
+		nowTime=`date +%s`
+	done
+    rm -rf socket_stat.txt
+}
+
+
 #监控redis info函数
 function monitorRedis(){
 	echo `date +%H:%M:%S` `date +%P` connected_clients used_memory used_memory_peak total_commands_processed keyspace_hits keyspace_misses hit_rate instantaneous_ops_per_sec  > $resDir/$filename"_redis_"$time.txt
@@ -322,6 +375,10 @@ Linux)
 
 	if [ $netstatFlag -eq 1 ];then
 		monitorNetstat &
+	fi
+
+	if [ $socketFlag -eq 1 ];then
+		monitorSocketStat &
 	fi
 	
 	if [ $processFlag -eq 1 ];then

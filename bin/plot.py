@@ -576,3 +576,7 @@ class TomcatResource(ServerResource):
 class NginxResource(ServerResource):
     """just inherit from ServerResource"""
     pass
+
+
+class SocketStatResource(ServerResource):
+    pass

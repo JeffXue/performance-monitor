@@ -41,6 +41,7 @@ class MonitorConfig():
         self.tomcat7_types = config.get("plot", 'tomcat7Status').split(",")
         self.tomcat6_types = config.get("plot", 'tomcat6Status').split(",")
         self.nginx_types = config.get("plot", 'nginxStatus').split(",")
+        self.socket_stat_types = config.get("plot", 'socketStat').split(",")
 
 
 def main():
@@ -120,8 +121,11 @@ def main():
                 if datafile.find('process') == -1 and datafile.find('thread') == -1:
                     nginx_resource = plot.TomcatResource(config.nginx_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
                     nginx_resource.work()
+            if datafile.find('SocketStat') != -1:
+                socket_stat_resource = plot.SocketStatResource(config.socket_stat_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
+                socket_stat_resource.work()
 
-    #generate sum report
+    # generate sum report
     report.Report.end_time = end_time
     resource_sum_report = report.Report(config.res_dir)
     resource_sum_report.work()
