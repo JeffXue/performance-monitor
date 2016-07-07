@@ -2,8 +2,10 @@
 import os
 import time
 import copy
+import json
 import commands
 import ConfigParser
+import requests
 from ftplib import FTP
 
 import util
@@ -13,7 +15,7 @@ env = Environment(loader=FileSystemLoader('./templates'))
 template = env.get_template('report.html')
 
 
-class Report():
+class Report:
 
     datafile_prefix = ""
     start_time = ""
@@ -28,6 +30,12 @@ class Report():
     ftp_password = ""
     ftp_flag = 0
 
+    # 用于上传数据
+    api_url = ""
+    api_flag = 0
+    api_monitor_type = ""
+    summary_data = {}
+
     def __init__(self, result_dir):
         self.result_dir = copy.copy(result_dir)
 
@@ -39,6 +47,10 @@ class Report():
         self.ftp_ip = config.get("ftp", "ip")
         self.ftp_user = config.get("ftp", "user")
         self.ftp_password = config.get("ftp", "password")
+
+        self.api_url = config.get("api", "url")
+        self.api_flag = int(config.get("api", "flag"))
+        self.api_monitor_type = config.get('api', 'type')
 
     def get_system_information(self):
         """
@@ -92,6 +104,14 @@ class Report():
                                       system_information=self.system_information,
                                       duration=duration,
                                       datafile_prefix=self.datafile_prefix)
+        self.summary_data.update(self.data_sum)
+        self.summary_data.update(self.system_information)
+        self.summary_data['duration'] = duration
+        self.summary_data['module'] = self.datafile_prefix.split('-')[0]
+        self.summary_data['version'] = self.datafile_prefix.split('-')[1]
+        self.summary_data['test_interface'] = self.datafile_prefix.split('-')[2]
+        self.summary_data['monitor_type'] = self.api_monitor_type
+
         f = open(self.report_file, "a+")
         try:
             f.write(html_report.encode('utf-8'))
@@ -159,11 +179,20 @@ class Report():
         file_handler.close()
         ftp.quit()
 
+    def api_upload(self):
+        r = requests.post(self.api_url, json=json.dumps(self.summary_data))
+        if r.text == "200":
+            print "[INFO]api upload success"
+        else:
+            print "[ERROR]api upload failed"
+
     def work(self):
         self.get_conf()
         self.get_system_information()
         self.set_file_name()
         self.generate_html_report()
+        if self.api_flag:
+            self.api_upload()
         self.package_files()
         if self.ftp_flag:
             self.ftp_upload()

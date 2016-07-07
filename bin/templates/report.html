@@ -30,36 +30,37 @@
 
   <p><strong>服务器资源使用情况汇总 ({{ datafile_prefix }}) </strong></p>
   <table class="bordered">
-  <tr>
-    <th>Item</th>
-    <th>Type</th>
-    <th>Min</th>
-    <th>Max</th>
-    <th>Avg</th>
-    <th>90%小于</th>
-  </tr>
-  {% for item, sub_type_dict in data_sum.iteritems() %}
+    <tr>
+      <th>Item</th>
+      <th>Type</th>
+      <th>Min</th>
+      <th>Max</th>
+      <th>Avg</th>
+      <th>90%小于</th>
+    </tr>
+    {% for item, sub_type_dict in data_sum.iteritems() %}
     {% for sub_type, sum_value in sub_type_dict.iteritems() %}
     {% if loop.first %}
-  <tr>
-    <th rowspan={{ sum_value[-1]  }}>{{ item }}</th>
-    <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
-    <td>{{ sum_value[0] }}</td>
-    <td>{{ sum_value[1] }}</td>
-    <td>{{ sum_value[2] }}</td>
-    <td>{{ sum_value[3] }}</td>
-  </tr>
+    <tr>
+      <th rowspan={{ sum_value[-1] }}>{{ item }}</th>
+      <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
+      <td>{{ sum_value[0] }}</td>
+      <td>{{ sum_value[1] }}</td>
+      <td>{{ sum_value[2] }}</td>
+      <td>{{ sum_value[3] }}</td>
+    </tr>
     {% else %}
-  <tr>
-    <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
-    <td>{{ sum_value[0] }}</td>
-    <td>{{ sum_value[1] }}</td>
-    <td>{{ sum_value[2] }}</td>
-    <td>{{ sum_value[3] }}</td>
-  </tr>
+    <tr>
+      <td><a href="{{ sum_value[-2] }}" target="_png">{{ sub_type }}</a></td>
+      <td>{{ sum_value[0] }}</td>
+      <td>{{ sum_value[1] }}</td>
+      <td>{{ sum_value[2] }}</td>
+      <td>{{ sum_value[3] }}</td>
+    </tr>
     {% endif %}
     {% endfor %}
-  {% endfor %}
+    {% endfor %}
+    </table>
 </div>
 </body>
 {% endblock%}
