@@ -109,7 +109,7 @@ class Report:
         self.summary_data['duration'] = duration
         self.summary_data['module'] = self.datafile_prefix.split('-')[0]
         self.summary_data['version'] = self.datafile_prefix.split('-')[1]
-        self.summary_data['test_interface'] = self.datafile_prefix.split('-')[2]
+        self.summary_data['scenario_name'] = self.datafile_prefix.split('-')[2]
         self.summary_data['monitor_type'] = self.api_monitor_type
 
         f = open(self.report_file, "a+")
