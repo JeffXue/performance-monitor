@@ -33,7 +33,7 @@ class MonitorMemcachedStat:
             if int(get_hits) != 0 or int(get_total) != 0:
                 hit_rate = '%0.2f' % float(float(int(get_hits)*100)/get_total)
             else:
-                hit_rate = 0
+                hit_rate = '0'
             bytes_read = stats.get('bytes_read')
             bytes_written = stats.get('bytes_written')
             limit_maxbytes = stats.get('limit_maxbytes')
@@ -45,7 +45,7 @@ class MonitorMemcachedStat:
             evictions = stats.get('evictions')
             stats_time = time.strftime('%H:%M:%S %p', time.localtime(time.time()))
             stats_list = [stats_time, curr_connections, cmd_get, cmd_set, cmd_flush, get_hits,
-                          get_misses, hit_rate, bytes_read, bytes_written, limit_maxbytes,
+                          get_misses, str(hit_rate), bytes_read, bytes_written, limit_maxbytes,
                           accepting_conns, threads, bytes, curr_items, total_items, evictions]
             with open(self.filename, 'a') as f:
                 f.write(' '.join(stats_list)+'\n')
