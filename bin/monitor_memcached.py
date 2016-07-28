@@ -54,6 +54,16 @@ class MonitorMemcachedStat:
 
 def main():
     parameters = get_parameter_lists(sys.argv)
+    if len(parameters) == 5:
+        ip = parameters[0]
+        port = parameters[1]
+        interval = parameters[2]
+        end_time = parameters[3]
+        filename = parameters[4]
+        user = ''
+        passwd = ''
+        monitor_memcached_stat = MonitorMemcachedStat(ip, port, interval, end_time, filename, user, passwd)
+        monitor_memcached_stat.work()
     if len(parameters) == 7:
         ip = parameters[0]
         port = parameters[1]
