@@ -2,22 +2,27 @@
 
 import sys
 import time
-import memcache
+import bmemcached
 
 from util import get_parameter_lists
 
 
-class MonitorMemcachedStat():
+class MonitorMemcachedStat:
 
-    def __init__(self, ip, port, interval, end_time, filename):
-        self.client = memcache.Client(['%s:%s' % (ip, port)])
+    def __init__(self, ip, port, interval, end_time, filename, user, passwd):
+        if user != '' and passwd != '':
+            self.client = bmemcached.Client(('%s:%s' % (ip, port),), user, passwd)
+        else:
+            self.client = bmemcached.Client(('%s:%s' % (ip, port),))
+        self.ip = ip
+        self.port = port
         self.interval = int(interval)
         self.end_time = float(end_time)
         self.filename = filename
 
     def work(self):
         while time.time() < self.end_time:
-            stats = self.client.get_stats()[0][1]
+            stats = self.client.stats()['%s:%s' % (self.ip, self.port)]
             curr_connections = stats.get('curr_connections')
             cmd_get = stats.get('cmd_get')
             cmd_set = stats.get('cmd_set')
@@ -49,13 +54,15 @@ class MonitorMemcachedStat():
 
 def main():
     parameters = get_parameter_lists(sys.argv)
-    if len(parameters) == 5:
+    if len(parameters) == 7:
         ip = parameters[0]
         port = parameters[1]
         interval = parameters[2]
         end_time = parameters[3]
         filename = parameters[4]
-        monitor_memcached_stat = MonitorMemcachedStat(ip, port, interval, end_time, filename)
+        user = parameters[5]
+        passwd = parameters[6]
+        monitor_memcached_stat = MonitorMemcachedStat(ip, port, interval, end_time, filename, user, passwd)
         monitor_memcached_stat.work()
 
 if __name__ == "__main__":

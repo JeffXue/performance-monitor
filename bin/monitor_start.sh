@@ -296,7 +296,7 @@ function monitorRedis(){
 #监控memcached stat函数
 function monitorMemcached(){
     echo `date +%H:%M:%S` `date +%P` curr_connections cmd_get cmd_set cmd_flush get_hits get_misses hit_rate bytes_read bytes_written limit_maxbytes accepting_conns threads bytes curr_items total_items evictions > $resDir/$filename"_memcached_"$time.txt
-	python monitor_memcached.py $memcachedIP $memcachedPort $interval $endTime $resDir/$filename"_memcached_"$time.txt
+	python monitor_memcached.py $memcachedIP $memcachedPort $interval $endTime $resDir/$filename"_memcached_"$time.txt $memcachedUser $memcachedPasswd
 }
 
 #监控mongodb stat函数
