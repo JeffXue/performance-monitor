@@ -240,7 +240,7 @@ class ServerResource():
             else:
                 resource_type = filename_decompose_list[i]
         report.Report.data_sum.setdefault(resource_type, self.calculate_data)
-        report.Report.lina_data.update(self.upload_data)
+        report.Report.line_data.update(self.upload_data)
 
     def work(self):
         self.read_data()
