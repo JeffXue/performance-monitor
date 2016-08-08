@@ -35,6 +35,7 @@ class Report:
     api_flag = 0
     api_monitor_type = ""
     summary_data = {}
+    lina_data = {}
 
     def __init__(self, result_dir):
         self.result_dir = copy.copy(result_dir)
@@ -180,6 +181,7 @@ class Report:
         ftp.quit()
 
     def api_upload(self):
+        self.summary_data['line_data'] = self.line_data
         r = requests.post(self.api_url, json=json.dumps(self.summary_data))
         if r.text == "200":
             print "[INFO]api upload success"

@@ -31,6 +31,7 @@ class ServerResource():
         self.calculate_data = {}
         for i in xrange(len(self.type)):
             self.data.setdefault(self.type[i], [])
+        self.upload_data = {}
 
     def read_data(self):
         """read raw data from file, generate timestamp into list
@@ -218,6 +219,10 @@ class ServerResource():
             plt.savefig(png_name)
             plt.close()
 
+            if self.type[i] in (r'%used', r'%iowait', r'%memused--', r'ldavg-1'):
+                self.upload_data.setdefault(self.type[i], {'timestamp': self.timestamp,
+                                                           'data': self.data[self.type[i]]})
+
     def record(self):
         """
         record the calculate_data into report object
@@ -235,6 +240,7 @@ class ServerResource():
             else:
                 resource_type = filename_decompose_list[i]
         report.Report.data_sum.setdefault(resource_type, self.calculate_data)
+        report.Report.lina_data.update(self.upload_data)
 
     def work(self):
         self.read_data()
