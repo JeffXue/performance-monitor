@@ -35,7 +35,7 @@ class Report:
     api_flag = 0
     api_monitor_type = ""
     summary_data = {}
-    lina_data = {}
+    line_data = {}
 
     def __init__(self, result_dir):
         self.result_dir = copy.copy(result_dir)
