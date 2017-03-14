@@ -176,7 +176,7 @@ function monitorMysql(){
 	nowTime=`date +%s`
 	while [ $nowTime -lt $endTime ]
 	do
-		threads=`mysql -h $mysqlIP -u$mysqlUser -p$mysqlPassword $mysqlDatabase -e"show global status like 'Threads_connected';" | grep Threads_connected |awk '{print $2}'`
+		threads=`$mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword $mysqlDatabase -e"show global status like 'Threads_connected';" | grep Threads_connected |awk '{print $2}'`
 		if [ ! -z $threads ];then
 		    echo `date +%H:%M:%S` `date +%P` $threads >> $resDir/$filename"_mysql_"$time.txt
 		fi
