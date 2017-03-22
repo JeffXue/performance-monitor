@@ -93,6 +93,7 @@ if [ ! -z $monitorTime ];then
 fi
 
 time=`date +%Y%m%d%H%M`
+formatted_start_time=`date '+%Y-%m-%d %H:%M:%S'`
 
 echo "--------------------------------------------------"
 echo "|performance_monitor is going to start ...       |"
@@ -170,20 +171,39 @@ function monitorProcess(){
 	done
 }
 
+
+function dumpMysqlSlowLog(){
+    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword -e"select * from mysql.slow_log where start_time >= '%formatted_start_time'" > $resDir/$filename"_mysql_slow_log_"$time.txt
+}
+
+function dumpMysqlProcessList(){
+    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword -e"SELECT * FROM  information_schema.processlist" > $resDir/$filename"_mysql_process_list_"$time.txt
+}
+
+function killMysqlProcessList(){
+    killSql=`$mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword -e"SELECT CONCAT('KILL ',id,';') FROM  information_schema.processlist WHERE Command='Query'" | grep -v CONCAT`
+    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword mysql -e"$killSql"
+}
+
 #监控mysql线程函数
 function monitorMysql(){
-	echo `date +%H:%M:%S` `date +%P` Threads_connected > $resDir/$filename"_mysql_"$time.txt
+	echo `date +%H:%M:%S` `date +%P` Threads_connected > $resDir/$filename"_mysql_threads_"$time.txt
 	nowTime=`date +%s`
 	while [ $nowTime -lt $endTime ]
 	do
 		threads=`$mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword $mysqlDatabase -e"show global status like 'Threads_connected';" | grep Threads_connected |awk '{print $2}'`
 		if [ ! -z $threads ];then
-		    echo `date +%H:%M:%S` `date +%P` $threads >> $resDir/$filename"_mysql_"$time.txt
+		    echo `date +%H:%M:%S` `date +%P` $threads >> $resDir/$filename"_mysql_threads_"$time.txt
 		fi
 		sleep $interval
 		nowTime=`date +%s`
 	done
+	dumpMysqlSlowLog
+	dumpMysqlProcessList
+	killMysqlProcessList
 }
+
+
 
 #监控端口稳定连接数函数
 function monitorNetstat(){
