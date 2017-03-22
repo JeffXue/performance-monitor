@@ -173,7 +173,7 @@ function monitorProcess(){
 
 
 function dumpMysqlSlowLog(){
-    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword -e"select * from mysql.slow_log where start_time >= '%formatted_start_time'" > $resDir/$filename"_mysql_slow_log_"$time.txt
+    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword -e"select * from mysql.slow_log where start_time >= '$formatted_start_time'" > $resDir/$filename"_mysql_slow_log_"$time.txt
 }
 
 function dumpMysqlProcessList(){

@@ -84,13 +84,13 @@ def main():
             if datafile.find("server_socket") != -1:
                 sock_resource = plot.SockResource(config.server_sock_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
                 sock_resource.work()
-            if datafile.find("mysql") != -1 and datafile.find('thread') != -1:
+            if datafile.find("mysql") != -1 and datafile.find('threads') != -1:
                 mysql_resource = plot.MySQLResource(config.mysql_connections_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
                 mysql_resource.work()
             if datafile.find("TCPPort") != -1:
                 tcp_port_resource = plot.TCPPortResource(config.tcp_port_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
                 tcp_port_resource.work()
-            if datafile.find("process") != -1:
+            if datafile.find("process") != -1 and datafile.find('mysql') == -1:
                 process_resource = plot.ProcessResource(config.process_types, result_prefix, config.res_dir+"/"+datafile, config.granularity)
                 process_resource.work()
             if datafile.find("redis") != -1:
