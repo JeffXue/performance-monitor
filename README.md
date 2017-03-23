@@ -1,4 +1,5 @@
-##Performance Monitor##
+## Performance Monitor
+
 performance monitor用于监控linux服务器中的资源情况，包括：
 * server_cpu    --  服务器CPU资源情况（sar）
     * `iowait(%) --  iowait占用CPU百分比，一般不应该超过30% `
@@ -110,8 +111,10 @@ performance monitor用于监控linux服务器中的资源情况，包括：
     * `waiting               --  等待操作`
     * `writing               --  写入操作`
 
+---
 
-##安装步骤##
+## 安装步骤
+
 - apt-get install build-essential
 - apt-get install libssl-dev
 - 编译安装python2.7+，setuptools和pip
@@ -123,8 +126,10 @@ performance monitor用于监控linux服务器中的资源情况，包括：
 - pip2.7 install virtualenv (可选，若需要在python虚拟环境中运行，则需安装）
 - pip2.7 install -r requirements.txt
 
+---
 
-##使用方法##
+## 使用方法
+
    配置config目录下的config.ini和report.ini
    
    cd performance_monitor/bin 
@@ -138,8 +143,9 @@ performance monitor用于监控linux服务器中的资源情况，包括：
       -f    数据文件名前缀 例子: test-v1.0-api (使用'-'作为分隔符，请勿使用'_' ) 
     结束后可到result目录中查看对应的输出表单和数据
 
+---
 
-##样例##
+## 样例
 
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
