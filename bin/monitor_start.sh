@@ -185,6 +185,11 @@ function killMysqlProcessList(){
     $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword mysql -e"$killSql"
 }
 
+
+function dumpMysqlInnodeLock(){
+    $mysqlPath -h $mysqlIP -P $mysqlPort -u$mysqlUser -p$mysqlPassword mysql -e"SELECT a.*, b.* FROM information_schema.INNODB_LOCK_WAITS a JOIN information_schema.INNODB_TRX c ON a.blocking_trx_id = c.trx_id JOIN information_schema.PROCESSLIST b ON c.trx_mysql_thread_id = b.ID ORDER BY TIME DESC ;" >> $resDir/$filename"_mysql_innode_lock_"$time.txt
+}
+
 #监控mysql线程函数
 function monitorMysql(){
 	echo `date +%H:%M:%S` `date +%P` Threads_connected > $resDir/$filename"_mysql_threads_"$time.txt
@@ -197,6 +202,10 @@ function monitorMysql(){
 		fi
 		sleep $interval
 		nowTime=`date +%s`
+
+		if [ $mysqlInnodeLockWaitsFlag -eq 1 ];then
+            dumpMysqlInnodeLock
+        fi
 	done
 	dumpMysqlSlowLog
 	dumpMysqlProcessList
