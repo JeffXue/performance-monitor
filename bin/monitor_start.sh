@@ -465,13 +465,13 @@ Linux)
 	if [ $serverSourceFlag -eq 1 ];then
 		if [ ! -f $interface1 ];then
 			cat $resDir/$filename"_server_network_"$time.txt | head -3 > $resDir/$interface1.txt
-			cat $resDir/$filename"_server_network_"$time.txt | grep $interface1 >> $resDir/$interface1.txt
+			cat $resDir/$filename"_server_network_"$time.txt | grep -w $interface1 >> $resDir/$interface1.txt
 			mv $resDir/$interface1.txt $resDir/$filename"_server_"$interface1"_"$time.txt
 		fi
 
 		if [ ! -f $interface2 ];then
 			cat $resDir/$filename"_server_network_"$time.txt | head -3 > $resDir/$interface2.txt
-			cat $resDir/$filename"_server_network_"$time.txt | grep $interface2 >> $resDir/$interface2.txt
+			cat $resDir/$filename"_server_network_"$time.txt | grep -w $interface2 >> $resDir/$interface2.txt
 			mv $resDir/$interface2.txt $resDir/$filename"_server_"$interface2"_"$time.txt
 		fi
 	fi
